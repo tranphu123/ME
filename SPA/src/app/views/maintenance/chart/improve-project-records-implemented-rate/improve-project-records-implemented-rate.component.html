@@ -1,0 +1,40 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-8 mr-0">
+              <h1 class="text-center">改善推廣率</h1>
+              <canvas width="200" height="100" baseChart [datasets]="chartData" [labels]="chartLabels"
+                [chartType]="chartType" [options]="chartOptions"></canvas>
+            </div>
+            <div class="col-4 pt-5 ml-0 pl-0">
+              <table class="table table-bordered mt-5">
+                <thead class="bg-primary">
+                  <tr>
+                    <th>Status</th>
+                    <th>Qty</th>
+                    <th>Rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of data">
+                    <td>{{ item.status}}</td>
+                    <td>{{ item.qty }}</td>
+                    <td>{{ (item.qty/sumData) * 100 | number: '1.2-2' }}%</td>
+                  </tr>
+                  <tr>
+                    <td>All</td>
+                    <td>{{ sumData }}</td>
+                    <td>100.00%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

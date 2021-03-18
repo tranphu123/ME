@@ -1,0 +1,41 @@
+thead {
+  background-color: #20a8d8;
+  color: #fff;
+}
+
+
+.scoll-bottom {
+  overflow-x: scroll;
+  overflow-y: hidden;
+
+}
+th {
+  font-weight: normal;
+}
+.font-table {
+font-size: 11px;
+}
+.btn-search
+{
+height: 50% !important;
+width: 120% !important;
+
+}
+.btn-query1{
+width: 100px;
+height: 30px;
+padding-top: 2px;
+margin-top: 50px;
+}
+.font-row
+{
+display: flex;
+flex-direction: column;
+}
+.font-lable
+{
+width: 120px;
+}
+.bacground-color-yellow {
+  background-color: yellow;
+}

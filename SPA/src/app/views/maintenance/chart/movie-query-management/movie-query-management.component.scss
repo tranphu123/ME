@@ -1,0 +1,34 @@
+thead {
+  background-color: #20a8d8;
+  color: #fff;
+}
+
+
+.scoll-bottom {
+  overflow-x: scroll;
+  overflow-y: hidden;
+
+}
+th {
+  font-weight: normal;
+}
+.font-table {
+font-size: 11px;
+}
+.form
+{
+  width: 60px;
+}
+.hover01 figure  {
+	-webkit-transform: scale(1);
+	transform: scale(1);
+	-webkit-transition: .3s ease-in-out;
+  transition: .3s ease-in-out;
+  cursor: pointer;
+}
+.hover01:hover {
+  color:red !important;
+}
+.bacground-color-cornflowerblue {
+  background-color:cornflowerblue;
+}

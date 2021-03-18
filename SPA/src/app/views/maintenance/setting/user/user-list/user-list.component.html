@@ -1,0 +1,103 @@
+<div class="animated fadeIn">
+  <!--/.row-->
+  <div class="row">
+    <!--/.col-->
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> List User
+          <input type="text" name="search" id="search" [(ngModel)]="text" class="form-control brand-search"
+            placeholder="Search" (keyup)="searchMesUser()">
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>User ID</th>
+                  <th>User Name</th>
+                  <th>Email</th>
+                  <th>Update Time</th>
+                  <th>Updated By</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let item of mesUser;let i = index">
+                <tr>
+                  <td>{{ (pagination.currentPage - 1) * pagination.itemsPerPage + i + 1 }}</td>
+                  <td>{{item.user_ID}}</td>
+                  <td>{{item.user_Name}}</td>
+                  <td>{{item.email}}</td>
+                  <td>{{item.update_Time}}</td>
+                  <td>{{item.updated_by}}</td>
+                  <td>
+                    <button type="button" class="btn btn-primary btn-sm mr-2" (click)="authorize(template,item)">
+                      <i class="fa fa-edit fa-lg"></i>Authorize
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="d-flex" *ngIf="pagination.totalPages > 1">
+            <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+              [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+              nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]=5>
+            </pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+    <ng-template #template>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Authorization</h4>
+        <button type="button" class="close pull-right" aria-label="Confirm" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- Modal -->
+      <div class="modal-body">
+        <form class="form-horizontal" #addAuditTypeDForm="ngForm" (ngSubmit)="addAuditTypeDForm.valid && authorizeSave()">
+          <div class="form-group row">
+            <label class="control-label col-md-3">Username</label>
+            <div class="col-md-3"><input readonly="readonly" class="form-control" [value]="userID"></div>
+            <div class="col-md-6"><input readonly="readonly" class="form-control" [value]="userName"></div>
+          </div>
+          <div class="form-group row">
+            <div class="table">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let item of modalUser;let i = index">
+                  <tr>
+                    <td>
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" [id]="item.role_name" [checked]="item.status"
+                        (change)="checkChange(item)">
+                        <label class="custom-control-label" [for]="item.role_name"></label>
+                      </div>
+                    </td>
+                    <td>{{item.role_unique}}</td>
+                    <td>{{item.role_name}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary float-right" style="margin: 5px;"(click)="authorizeSave()">
+          Save
+        </button>
+        <button type="button" class="btn btn-danger float-right" style="margin: 5px;" (click)="modalRef.hide()">
+          Close
+        </button>
+      </div>
+    </ng-template>
+  </div>
+</div>

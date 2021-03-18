@@ -1,0 +1,80 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong *ngIf="!auditType.audit_Type_ID;else elseBlock">Add new</strong>
+          <ng-template #elseBlock><strong>Update</strong></ng-template>
+          audit type
+          <button type="button" class="btn btn-sm btn-primary float-right" (click)="backList()"><i
+              class="fa fa-chevron-left"></i>
+            Back</button>
+        </div>
+        <form class="form-horizontal" #addAuditTypeForm="ngForm" (ngSubmit)="addAuditTypeForm.valid && saveAndNext()">
+          <div class="card-body">
+
+            <div class="form-group row">
+              <label class="col-md-1 col-form-label" for="audit_Type_ID"> Audit Type ID </label>
+              <div class="col-md-3">
+                <input type="text" [(ngModel)]="auditType.audit_Type_ID" name="audit_Type_ID" class="form-control"
+                  required disabled>
+              </div>
+              <label class="col-md-1 col-form-label" for="brand">Brand</label>
+              <div class="col-md-3">
+                <ng-select2 [data]="brands" width="100%" [(ngModel)]="auditType.brand" name="brand">
+                </ng-select2>
+              </div>
+              <label class="col-md-1 col-form-label" for="status">Status</label>
+              <div class="col-md-3">
+                <select class="form-control" id="status" [(ngModel)]="auditType.status" name="status">
+                  <option value="1">Valid</option>
+                  <option value="0">Invalid</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-1 col-form-label" for="audit_Type1">Audit Type</label>
+              <div class="col-md-3">
+                <input type="text" [(ngModel)]="auditType.audit_Type1" name="audit_Type1" class="form-control"
+                  placeholder="Enter audit type ..">
+              </div>
+              <label class="col-md-1 col-form-label" for="audit_Type2">Audit Item</label>
+              <div class="col-md-3">
+                <input type="text" [(ngModel)]="auditType.audit_Type2" name="audit_Type2" class="form-control"
+                  placeholder="Enter Audit Item..">
+              </div>
+              <label class="col-md-1 col-form-label" for="audit_Type2_Name">Audit Title</label>
+              <div class="col-md-3">
+                <input type="text" [(ngModel)]="auditType.audit_Type2_Name" name="audit_Type2_Name" class="form-control"
+                  placeholder="Enter Audit Title ..">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-1 col-form-label" for="version">Version</label>
+              <div class="col-md-3">
+                <input type="number" [(ngModel)]="auditType.version" name="version" class="form-control" disabled>
+              </div>
+              <label class="col-md-1 col-form-label" for="brand">Audit Kind</label>
+              <div class="col-md-3">
+                <ng-select2 [data]="auditKinds" width="100%" [(ngModel)]="auditType.audit_Kind" name="audit_Kind">
+                </ng-select2>
+              </div>
+            </div>
+
+          </div>
+          <div class="card-footer">
+            <button type="button" *ngIf="flag =='1'" (click)=" upgrade() " class="btn btn-sm btn-primary"><i
+                class="fa fa-level-up "></i>
+              Upgrade</button>
+            <button type="button" class="btn btn-sm btn-danger" (click)="cancel()"><i class="fa fa-ban"></i>
+              Cancel</button>
+            <button type="submit" *ngIf="flag=='0'" class="btn btn-sm btn-primary"
+              [disabled]="!addAuditTypeForm.valid"><i class="fa fa-check"></i> Save & Next</button>
+            <button type="button" class="btn btn-sm btn-success" [disabled]="!addAuditTypeForm.valid"
+              (click)="save()"><i class="fa fa-check"></i> Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

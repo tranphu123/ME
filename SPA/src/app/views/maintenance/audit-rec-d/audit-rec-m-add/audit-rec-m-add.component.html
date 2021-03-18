@@ -1,0 +1,93 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+              <strong *ngIf="!auditRecM.record_ID; else elseBlock">Add new</strong>
+              <ng-template #elseBlock><strong>Update</strong></ng-template>
+              Meeting Minutes
+          <button type="button" (click)="back()" class="btn btn-sm btn-primary float-right"><i
+              class="fa fa-chevron-left"></i>
+            Back</button>
+        </div>
+        <form class="form-horizontal" #addAuditRecMForm="ngForm" (ngSubmit)="addAuditRecMForm.valid && saveAndNext()">
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-1 col-form-label" for="Record_Time">Record Date: </label>
+              <div class="col-md-2">
+                <div class="input-group" >
+                  <input class="form-control"
+                      name="Record_Time"
+                      placeholder="Record Time"
+                      [(ngModel)]="auditRecM.record_Time"
+                      type="text" bsDatepicker
+                      (ngModelChange) ="changedate($event)"
+                      [bsConfig]="{ isAnimated: true, dateInputFormat: 'YYYY/MM/DD'}" required >
+                  <span class="input-group-text">
+                    <span class="fa fa-calendar"></span>
+                  </span>
+                </div>
+              </div>
+              <label class="col-md-1 col-form-label" for="PDC">Department</label>
+              <div class="col-md-2">
+                  <ng-select2 [data]="pdcs" width="100%" [(ngModel)]="auditRecM.pdc" name="PDC" (ngModelChange)="pdcChange()" required>
+                  </ng-select2>
+              </div>
+              <label class="col-md-1 col-form-label" for="Building">Building</label>
+              <div class="col-md-2">
+                  <ng-select2 [data]="buildings" width="100%" [(ngModel)]="auditRecM.building" name="Building" (ngModelChange)="buingdingChange()" required>
+                  </ng-select2>
+              </div>
+              <label class="col-md-1 col-form-label" for="Line_ID">Line ID</label>
+              <div class="col-md-2">
+                  <ng-select2 [data]="lineIDs" width="100%" [(ngModel)]="auditRecM.line" name="Line_ID" required>
+                  </ng-select2>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-1 col-form-label" for="Model_No">Model No</label>
+              <div class="col-md-2">
+                <ng-select2 [data]="modelNos" width="100%" [(ngModel)]="auditRecM.model_No" name="model_No" (ngModelChange)="changeOptionModelNo()" required>
+                </ng-select2>
+              </div>
+              <label class="col-md-1 col-form-label" for="Model_Name">Model Name</label>
+              <div class="col-md-2">
+                  <input class="form-control" name="modelName"
+                  [(ngModel)]="auditRecM.model_Name" type="text" placeholder="Model Name"[disabled] ="true" required>
+              </div>
+              <label class="col-md-1 col-form-label" for="Chief">Host</label>
+              <div class="col-md-2">
+                  <input class="form-control" name="Chief" [(ngModel)]="auditRecM.chief" required
+                    type="text" placeholder="Enter chief">
+              </div>
+              <label class="col-md-1 col-form-label" for="Recorder">Recorder</label>
+              <div class="col-md-2">
+                <input class="form-control" name="Recorder"
+                [(ngModel)]="auditRecM.recorder" type="text" placeholder="Enter recorder" required>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-1 col-form-label" for="attendees">Attendees</label>
+              <div class="col-md-5">
+                <textarea class="form-control"
+                [(ngModel)]="auditRecM.attendees"
+                name="attendees" id=""
+                rows="3" required></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button type="button" class="btn btn-sm btn-danger" (click)="cancel()" ><i class="fa fa-ban"></i> Cancel</button>
+            <button type="submit"  *ngIf="flag === '0'" class="btn btn-sm btn-primary"  [disabled]="!addAuditRecMForm.valid"><i
+                class="fa fa-check" ></i> Save & NewDetail</button>
+            <button type="button" (click)="save()" class="btn btn-sm btn-success" [disabled]="!addAuditRecMForm.valid"><i
+                class="fa fa-check"></i> Save</button>
+          </div>
+        </form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+

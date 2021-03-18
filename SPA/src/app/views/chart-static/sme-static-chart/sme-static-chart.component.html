@@ -1,0 +1,45 @@
+<div class="animated fadeIn mt-5">
+  <div class="row">
+    <div class="col-12 text-right mb-4">
+      <button class="btn btn-primary" [routerLink]="['/chart-static/factory-tree']" routerLinkActive="router-link-active" >
+        <i class="fa fa-chevron-left"></i>
+        Back
+      </button>
+    </div>
+    <div class="col-md-6">
+      <highcharts-chart [Highcharts]="highcharts" [options]="chartOptionsModule1"
+        style="width: 100%; height: 400px; display: block;">
+      </highcharts-chart>
+    </div>
+
+    <div class="col-md-6">
+      <highcharts-chart [Highcharts]="highcharts" [options]="chartOptionsModule3"
+        style="width: 100%; height: 400px; display: block;">
+      </highcharts-chart>
+    </div>
+  </div>
+  <div class="card">
+    <div class="scoll-bottom">
+      <table class="table table-bordered ">
+        <thead>
+          <tr  class = "title-parent" >
+            <th colspan="2">Weakness in {{title}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr  *ngFor="let item of tableWeakness">
+            <th>{{item.audit_Type2}}</th>
+            <th>{{item.audit_Item_LL}}</th>
+          </tr>
+          <tr *ngIf="nodata">
+            <td colspan="10">
+              <div class="alert-table alert alert-waring ">
+                No data found !
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

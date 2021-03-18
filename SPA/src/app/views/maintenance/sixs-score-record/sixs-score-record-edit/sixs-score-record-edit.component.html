@@ -1,0 +1,51 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> 6S Record Edit
+          <button type="button" class="btn btn-sm btn-primary float-right" (click)="back()">
+            <i class="fa fa-chevron-left"></i> Back
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="question">
+            <div *ngFor="let item of questions; let i = index">
+              <p><b>{{item.audit_Item_ID}}.{{item.quesionLL}}</b></p>
+              <label class="container">N/A
+                <input type="radio" name="{{i}}" id="{{i}}" (click)="checkChange(item, 3)" />
+                <span class="checkmark"></span>
+              </label>
+              <label class="container">
+                0
+                <input type="radio" name="{{i}}" (click)="checkChange(item, 0)" />
+                <span class="checkmark"></span>
+              </label>
+              <label class="container">1
+                <input type="radio" name="{{i}}" (click)="checkChange(item, 1)" />
+                <span class="checkmark"></span>
+              </label>
+              <label class="container">2
+                <input type="radio" name="{{i}}" (click)="checkChange(item, 2)" />
+                <span class="checkmark"></span>
+              </label>
+              <div *ngIf="item.rating_0 == 1" class="row">
+                <div class="col-12">
+                  <label>Remake :</label>
+                </div>
+                <div class="col-12">
+                  <textarea class="remake ml-5 form-control" [(ngModel)]="item.remark"> </textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ml-1 mt-2" *ngIf="questions.length !=0">
+            <button type="button" class="btn btn-add-new btn-success" (click)="save()">
+              <i class="fa fa-check"></i> Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

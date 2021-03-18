@@ -1,0 +1,132 @@
+<div class="animated fadeIn">
+  <!--/.row-->
+  <div class="row">
+    <!--/.col-->
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-lg-10">
+              <i class="fa fa-align-justify"></i> Query Movie Management
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-3">
+              <label class="badge badge-warning font-lable">Brand</label>
+              <ng-select2 [data]="brands" [(ngModel)]="brand" [value] ="brand" width="100%"
+             name="Brands"(ngModelChange) ="brandChange()" >
+            </ng-select2>
+            </div>
+            <div class="col-1">
+              <label class="badge badge-warning font-lable">Version</label>
+              <ng-select2 [data]="versions" [(ngModel)]="version" [value] ="version"  width="100%"
+                name="version" [disabled] ="latest">
+             </ng-select2>
+            </div>
+            <div class="col-2 mt-3">
+              <div class="mt-3">
+                <input type="checkbox" [(ngModel)]="latest">
+                <label>Latest</label>
+              </div>
+            </div>
+            <div class="col-3">
+              <label class="badge badge-warning font-lable">Search</label>
+              <input class = "form-control" [(ngModel)]="text"  type="text"placeholder="Enter The Keyword ">
+            </div>
+            <div class="col-2">
+              <label class="badge badge-warning">Language</label>
+              <select class="form-control" [(ngModel)]="lang" (ngModelChange)="changeLanguage($event)">
+                <option value="EN">English</option>
+                <option value="ZW">Chinese</option>
+                <option value="LL">Local</option>
+              </select>
+            </div>
+          </div>
+          <div class="row mt-1">
+            <div class="col-3">
+              <label class="badge badge-warning font-lable">Audit Type</label>
+              <ng-select2 [data]="auditType" [value] ="audit_Type_ID" [(ngModel)]="audit_Type_ID" width="100%"
+               name="audit_Type" (ngModelChange) ="auditTypeChange()">
+            </ng-select2>
+            </div>
+            <div class="col-1">
+              <label class="badge badge-warning font-lable">Audit Item ID</label>
+                <ng-select2 [data]="auditItems" [(ngModel)]="auditItem" [value] ="auditItem" width="100%"
+                name="audit_Item">
+             </ng-select2>
+
+            </div>
+            <div class="col-2 mt-3">
+              <div class="mt-2">
+                <button type="button"
+              class="btn btn-block btn-query1 float-right btn-secondary" (click)="Seacher()">Query</button>
+              </div>
+            </div>
+            <div class="col-3">
+            </div>
+            <div class="col-3">
+            </div>
+          </div>
+        </div>
+        <div class="card-body mt-1">
+          <ngx-spinner bdOpacity="0.2" bdColor="rgba(51,51,51,0.8)" size="medium" color="#20A8D8" type="pacman">
+          </ngx-spinner>
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Expected Performance</th>
+                  <th>Version</th>
+                  <th>Updated By</th>
+                  <th>Update Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of auditTypeD" [class.bacground-color-cornflowerblue]="item.audit_Item_ID.split('.').pop() === '0'">
+                  <td>{{item.audit_Item_ID}}</td>
+                  <td class ="hover01" ><figure (click)="openVideo(template,item)">
+                    {{lang =="LL"?item.audit_Item_LL:lang =="EN"?item.audit_Item_EN:item.audit_Item_ZW}}</figure></td>
+                  <td>{{item.audit_Item_ID.split('.').pop() === '0'?"":item.version}}</td>
+                  <td>{{item.audit_Item_ID.split('.').pop() === '0'?"":item.updated_By}}</td>
+                  <td>{{item.audit_Item_ID.split('.').pop() === '0'?"":item.updated_Time | date : "MM/dd/yyyy, HH:mm:ss"}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="d-flex" *ngIf="pagination.totalPages > 1">
+            <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+              [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+              nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]="5">
+            </pagination>
+          </div>
+          <ng-template #template>
+            <div class="modal-header">
+              <h4 class="modal-title pull-left">Watch video</h4>
+              <button type="button" class="close pull-right" aria-label="Confirm" (click)="modalRef.hide()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <!-- Modal -->
+            <div class="modal-body">
+              <form class="form-horizontal" #addAuditTypeDForm="ngForm" >
+                <div class="form-group row">
+                  <div class="col-1"></div>
+                  <video  width="100%" [src]="url" (error)="errorVideo()" controls
+                  width="400"></video>
+                </div>
+                <div class="form-group row">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger float-right" style="margin: 5px;" (click)="modalRef.hide()">
+                Close
+              </button>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

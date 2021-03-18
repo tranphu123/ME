@@ -1,0 +1,66 @@
+<div class="animated fadeIn">
+    <!--/.row-->
+    <div class="row">
+        <!--/.col-->
+        <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+            <i class="fa fa-align-justify"></i> List Dept
+            <input type="text" name="search" id="search"
+            [(ngModel)]="text" (keyup)="search()"
+            class="form-control brand-search"
+                placeholder="Search">
+            <button type="button" class="btn btn-sm btn-primary float-right" (click)="add()"><i
+                class="fa fa-plus"></i> Add new</button>
+            </div>
+            <div class="card-body">
+            <ngx-spinner bdOpacity=0.2 bdColor="rgba(51,51,51,0.8)" size="medium" color="#20A8D8" type="pacman">
+            </ngx-spinner>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>PIC Type ID</th>
+                            <th>PIC Type CN</th>
+                            <th>PIC Type EN</th>
+                            <th> PIC Type Local</th>
+                            <th>Status</th>
+                            <th>Updated By</th>
+                            <th>Updated Time</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of auditPics; let i = index">
+                        <td>{{ (pagination.currentPage - 1) * pagination.itemsPerPage + i + 1 }}</td>
+                        <td>{{ item.piC_Type_ID}}</td>
+                        <td>{{ item.piC_Type_ZW }}</td>
+                        <td>{{ item.piC_Type_EN }}</td>
+                        <td>{{ item.piC_Type_LL }}</td>
+                        <td *ngIf="item.status == '1'; else elseStatus">Valid</td>
+                        <ng-template #elseStatus>
+                            <td>Invalid</td>
+                        </ng-template>
+                        <td>{{ item.updated_By }}</td>
+                        <td>{{ item.updated_Time | date: "MM/dd/yyyy, HH:mm:ss"}}</td>
+                        <td>
+                        <button type="button" class="btn btn-primary btn-sm ml-4" (click)="update(item)"><i
+                            class="fa fa-edit fa-lg"></i></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="d-flex" *ngIf="pagination.totalPages > 1">
+                <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+                [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+                nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]=5>
+                </pagination>
+            </div>
+            </div>
+        </div>
+        </div>
+        <!--/.col-->
+        </div>
+    </div>

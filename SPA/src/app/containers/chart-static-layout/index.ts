@@ -1,0 +1,1 @@
+export * from "./chart-static-layout.component"

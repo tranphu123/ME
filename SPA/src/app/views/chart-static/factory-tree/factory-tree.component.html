@@ -1,0 +1,96 @@
+<div class="animated fadeIn">
+  <div class="title-head text-right mb-3 mt-2 row">
+    <div class="col-11">
+      <table class="introduce">
+        <tr>
+          <td>
+            <img class="image" [src]="urlIconTreatment + 'Printing.jpg'" alt="">
+          </td>
+          <td>Printing</td>
+          <td class="space"></td>
+          <td>
+            <img class="image" [src]="urlIconTreatment + 'Sockliner.jpg'" alt="">
+          </td>
+          <td>Sockliner</td>
+          <td class="space"></td>
+          <td>
+            <img class="image" [src]="urlIconTreatment + 'Thread_cutting.jpg'" alt="">
+          </td>
+          <td>Thread cutting</td>
+          <td class="space"></td>
+          <td>
+            <img class="image" [src]="urlIconTreatment + 'Pressing.jpg'" alt="">
+          </td>
+          <td>Pressing</td>
+          <td class="space"></td>
+          <td>
+            <img class="image" [src]="urlIconTreatment + 'Boost.jpg'" alt="">
+          </td>
+          <td>Boost</td>
+          <td class="space"></td>
+          <td>
+            <img class="image" [src]="urlIconTreatment + 'Pre_Shrinking.jpg'" alt="">
+          </td>
+          <td>Pre-Shrinking</td>
+          <td class="space"></td>
+          <td>
+            <img class="image" [src]="urlIconTreatment + 'Digital_Punching.jpg'" alt="">
+          </td>
+          <td>Digital Punching</td>
+        </tr>
+      </table>
+    </div>  
+    <div class="col-1">
+      <button class="btn btn-primary  " [routerLink]="['/dashboard']" routerLinkActive="router-link-active">
+        <i class="fa fa-chevron-left"></i> Back</button>
+    </div> 
+  </div>
+  <div class="table-responsive mt-2">
+    <table class="table">
+      <tr>
+        <!-- Company -->
+        <td class="company" style=" background-color: #404040;">
+          <button class="btn " [routerLink]="['/chart-static/factory-tree',0,'factory']"
+            routerLinkActive="router-link-active">
+            {{data?.factory}}
+          </button>
+        </td>
+        <td class="border-0 pt-0 pb-0">
+      <tr class="right" *ngFor="let item of data?.listDept">
+        <!-- Department -->
+        <td class="department">
+          <button class="btn" style="width: 100%; height: 50px;"
+            [routerLink]="['/chart-static/factory-tree',1,item.pdC_ID.trim()]">Dept
+            {{item.pdcName}}</button>
+        </td>
+        <td class="border-0 pt-0 pb-0">
+      <tr class="building-line" *ngFor="let itemBuilding of item.listBuilding">
+        <!-- Building -->
+        <td class="building">
+          <button class="btn " style="width: 100px; height: 50px;"
+            [routerLink]="['/chart-static/factory-tree',2,itemBuilding.building.trim()]">
+            {{itemBuilding.buildingName}}</button>
+        </td>
+        <td class="border-0 pt-0 pb-0">
+      <tr *ngIf="item.pdcName!='TREATMENT'">
+        <!-- Line -->
+          <td class="line" *ngFor="let itemLine of itemBuilding.listLine">
+            <button class="btn"  *ngIf="itemLine" placement="top" [tooltip]="itemLine.line_Name"
+              [routerLink]="['/chart-static/factory-tree',3,itemLine.line_ID]">
+              {{itemLine.line_ID}}
+            </button>
+          </td>
+      </tr>
+      <tr *ngIf="item.pdcName=='TREATMENT'">
+        <!-- Line -->
+          <td class="line" *ngFor="let itemLine of itemBuilding.listLine">
+              <img class="image" *ngIf="itemLine" [routerLink]="['/chart-static/factory-tree',3,itemLine.line_ID]" [src]="urlImage+itemLine.icon_Path" alt="" width="100%" [tooltip]="itemLine.line_Name" >
+          </td>
+      </tr>
+      </td>
+      </tr>
+      </td>
+      </tr>
+    </table>
+  </div>
+</div>

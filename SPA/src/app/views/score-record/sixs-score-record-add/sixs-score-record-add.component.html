@@ -1,0 +1,178 @@
+<div>
+  <div class="choose-question">
+    <div class="row">
+      <div class="col-md-2 col-6  mb-md-5">
+        <label class="badge badge-primary">Language</label>
+        <select class="form-control" [(ngModel)]="lang" (ngModelChange)="changeLanguage($event)">
+          <option value="EN">English</option>
+          <option value="ZW">Chinese</option>
+          <option value="LL">Local</option>
+        </select>
+      </div>
+      <div class="col-md-8 col-12">
+        <p class="title-head">6S 稽核評分紀錄</p>
+      </div>
+
+      <div class="col-md-2 col-12">
+        <button type="button" class="btn btn-sm btn-primary float-right" (click)="back()">
+          <i class="fa fa-chevron-left"></i> Back
+        </button>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-6 col-md-2">
+        <label class="badge badge-warning">Date</label>
+        <div class="input-group">
+          <input class="form-control" placeholder="Start" type="text" bsDatepicker [bsConfig]="{
+              isAnimated: true,
+              dateInputFormat: 'YYYY/MM/DD'
+            }" [(ngModel)]="recordDate" />
+          <span class="input-group-text">
+            <span class="fa fa-calendar"></span>
+          </span>
+        </div>
+      </div>
+      <div class="col-6 col-md-2">
+        <label class="badge badge-warning">Department</label>
+        <ng-select2 [data]="pdcs" [value]="pdc" width="100%" [(ngModel)]="pdc"  (ngModelChange)="pdcChange()">
+        </ng-select2>
+
+      </div>
+      <div class="col-6 col-md-2">
+        <label class="badge badge-warning">Building</label>
+        <ng-select2 [data]="buildings" [value]="building" width="100%" [(ngModel)]="building"  (ngModelChange)="buingdingChange()">
+        </ng-select2>
+
+      </div>
+      <div class="col-6 col-md-2">
+        <label class="badge badge-warning">Line</label>
+        <ng-select2 [data]="lineIDs" [value]="lineID" width="100%" [(ngModel)]="lineID" >
+        </ng-select2>
+      </div>
+      <div class="col-6 col-md-2">
+        <label class="badge badge-warning"> Auditor</label>
+        <ng-select2 [data]="MEPICS" [value]="MEPIC" width="100%" [(ngModel)]="MEPIC" (ngModelChange)="mepicChange()" >
+        </ng-select2>
+      </div>
+      <div class="col-6 col-md-2">
+        <label class="badge badge-warning">Prod. PIC</label>
+        <ng-select2 [data]="PDRESPS" [value]="PDRESP" width="100%" [(ngModel)]="PDRESP" >
+        </ng-select2>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-12 col-md-2">
+        <label class="badge badge-warning">Brand</label>
+        <ng-select2 [data]="brands" width="100%" [(ngModel)]="brand" [value]="brand" name="brand" (ngModelChange)="brandChange()">
+        </ng-select2>
+      </div>
+      <div class="col-12 col-md-4">
+        <label class="badge badge-warning">Audit Item</label>
+        <ng-select2 [data]="auditTypes" [value]="auditTypeID" width="100%" [(ngModel)]="auditTypeID" name="auditItem" (ngModelChange)="auditTypeChange()">
+        </ng-select2>
+      </div>
+      <div class="col-12 col-md-2">
+        <label class="badge badge-warning">Model No</label>
+        <ng-select2 [data]="modelNos" [value]="modelNo" width="100%" [(ngModel)]="modelNo" name="modelNo" (ngModelChange)="changeModelNo()">
+        </ng-select2>
+      </div>
+      <div class="col-6 col-md-2">
+        <label class="badge badge-warning">Model Name</label>
+        <input class="form-control" type="text" [value]="modelName" disabled name="modelName" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6 col-md-2">
+        <label class="badge badge-warning">Update By</label>
+        <input class="form-control" type="text" name="model_name" [value]="user.name" disabled />
+      </div>
+      <div class="col-6 col-md-2">
+        <label class="badge badge-warning">Update Time</label>
+        <input class="form-control" type="text" name="model_name" disabled
+          [value]="today | date: 'yyyy/MM/dd HH:mm:ss'" />
+      </div>
+      <div class="col-6 col-md-2">
+        <label class="badge badge-warning">Stop line</label>
+        <div class ="form pt-2">
+          <input class="" type="checkbox" [(ngModel)]="isChecked" (change)="haltingProduction()" [disabled]="isCheckDisable">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="question">
+    <div *ngFor="let item of questions; let i = index">
+      <p><b>{{item.audit_Item_ID}}.
+          {{lang === 'EN' ? item.quesionEN : lang === 'ZW' ? item.quesionZW : item.quesionLL}}</b></p>
+      <label class="container">N/A
+        <input type="radio" name="{{i}}" id="{{i}}" (click)="checkChange(item, 3)" [disabled]="isDisable" />
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        N
+        <input type="radio" name="{{i}}" (click)="checkChange(item, 0)" (change)="openWebcame(item,template)" [disabled]="isDisable" />
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">Y
+        <input type="radio" name="{{i}}" (click)="checkChange(item, 1)" [disabled]="isDisable" />
+        <span class="checkmark"></span>
+      </label>
+      <div *ngIf="item.rating_0 == 1" class="row" >
+        <div class="col-md-12">
+            <div class="rating-remark">
+              <div class="col-12">
+                <label>Remark :</label>
+              </div>
+              <div class="col-12">
+                <textarea class="remake ml-5 form-control" [(ngModel)]="item.remark"> </textarea>
+              </div>
+            </div>
+            <div class="rating-picture mt-2">
+              <div class="col-12">
+                <label [hidden]="!item.urlPicture">Picture:</label>
+              </div>
+              <div class="col-12 ml-5">
+                <img [src]="item.urlPicture"  width="10%" [hidden]="!item.urlPicture" />
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="modal">
+        <ng-template #template>
+          <div class="modal-header">
+            <h4 class="modal-title pull-left">Take Before Photo</h4>
+            <button type="button" class="close pull-right" aria-label="Confirm" (click)="modalRef.hide()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <webcam [width]="470" [height]="350" [trigger]="triggerObservable" (imageCapture)="handleImage(item,$event)"
+              *ngIf="showWebcam" [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
+              [videoOptions]="videoOptions" [imageQuality]="1" (cameraSwitched)="cameraWasSwitched($event)"
+              (initError)="handleInitError($event)" [captureImageData]="true"></webcam>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Close</button>
+            <button type="button" class="btn btn-primary" (click)="triggerSnapshot();">Take a photo</button>
+            <button type="button" class="btn btn-success" (click)="toggleWebcam()">Toggle Camera</button>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <div class="ml-1 mt-2" *ngIf="questions.length !=0">
+    <button type="button" class="btn btn-add-new btn-primary" (click)="openOutlook()">
+      <i class="fa fa-envelope"></i><span style="margin-left: 2px;"> E-mail</span>
+    </button>
+    <button type="button" class="btn btn-add-new btn-danger" (click)="cancel()">
+      <i class="fa fa-ban"></i> Cancel
+    </button>
+
+    <button type="button" class="btn btn-add-new btn-success" (click)="saveAll(1)">
+      <i class="fa fa-check"></i> Save & New
+    </button>
+
+    <button type="button" class="btn btn-add-new btn-success" (click)="saveAll(2)">
+      <i class="fa fa-check"></i> Save
+    </button>
+  </div>
+</div>

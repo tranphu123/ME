@@ -1,0 +1,87 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong *ngIf="!auditType.audit_Type_ID;else elseBlock">Add new</strong>
+          <ng-template #elseBlock><strong>Update</strong></ng-template>
+          audit type D
+          <button type="button" class="btn btn-sm btn-primary float-right" (click)="backList()"><i
+              class="fa fa-chevron-left"></i>
+            Back</button>
+        </div>
+        <form class="form-horizontal" #addAuditTypeDForm="ngForm" (ngSubmit)="addAuditTypeDForm.valid && saveAndNext()">
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-1 col-form-label" for="audit_Type_ID"> Audit Type ID </label>
+              <div class="col-md-3">
+                <ng-select2 [data]="auditTypeM" width="100%" [(ngModel)]="auditType.audit_Type_ID" name="audit_type_id" required>
+                </ng-select2>
+              </div>
+              <label class="col-md-1 col-form-label" for="audit_Item_ID">Audit Item ID</label>
+              <div class="col-md-3">
+                <input type="text" name="audit_Item_id" [(ngModel)]="auditType.audit_Item_ID" class="form-control"
+                  placeholder="Enter audit item ID.." required>
+              </div>
+              <label class="col-md-1 col-form-label" for="audit_Item_ID">Video</label>
+
+                <div class="col-md-1">
+                  <label class="btn btn-primary upload">
+                    Upload
+                    <input type="file" class="uploadFile img" value="Upload Photo"
+                      style="width: 0px; height: 0px; overflow: hidden;" (change)="onSelectFile($event)" #fileImageB4 />
+                  </label>
+                </div>
+                <div class="col-md-2">
+                  <img *ngIf="hideVideo" [src]="url_image" width="100%" width="60" />
+                <video *ngIf="!hideVideo" width="100%" [src]="url" controls
+                  width="110"></video>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-1 col-form-label" for="Audit_Item_EN">Audit EN</label>
+              <div class="col-md-3">
+                <textarea name="audit_item_en" [(ngModel)]="auditType.audit_Item_EN" id="audit_item_en"
+                  class="form-control" rows="5"></textarea>
+              </div>
+              <label class="col-md-1 col-form-label" for="audit_item_ll">Audit Local</label>
+              <div class="col-md-3">
+                <textarea name="audit_item_ll" [(ngModel)]="auditType.audit_Item_LL" class="form-control"
+                  id="audit_item_ll" rows="5"></textarea>
+              </div>
+              <label class="col-md-1 col-form-label" for="audit_Type2">Audit CN</label>
+              <div class="col-md-3">
+                <textarea name="audit_Item_ZW" [(ngModel)]="auditType.audit_Item_ZW" class="form-control"
+                  id="audit_Item_ZW" rows="5"></textarea>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-1 col-form-label" for="audit_Type2_Name">Rating 0</label>
+              <div class="col-md-3">
+                <input type="number" name="rating_0" [(ngModel)]="auditType.rating_0" class="form-control"
+                  placeholder=" Enter rating 0…" required>
+              </div>
+              <label class="col-md-1 col-form-label" for="audit_Type2_Name">Rating 1</label>
+              <div class="col-md-3">
+                <input type="number" name="rating_1" [(ngModel)]="auditType.rating_1" class="form-control"
+                  placeholder="Enter rating 1…"required>
+              </div>
+              <label class="col-md-1 col-form-label" for="audit_Type2_Name">Rating 2</label>
+              <div class="col-md-3">
+                <input type="number" name="rating_2" [(ngModel)]="auditType.rating_2" class="form-control"
+                  placeholder=" Enter rating 2…"required>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button type="button" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Cancel</button>
+            <button type="submit" class="btn btn-sm btn-primary" *ngIf="flag=='0'"
+              [disabled]="!addAuditTypeDForm.valid"><i class="fa fa-check"></i> Save & Next</button>
+            <button type="button" class="btn btn-sm btn-success" (click)="save()"
+              [disabled]="!addAuditTypeDForm.valid"><i class="fa fa-check"></i> Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

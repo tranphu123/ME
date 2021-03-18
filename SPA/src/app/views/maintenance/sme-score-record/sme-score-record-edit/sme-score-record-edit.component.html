@@ -1,0 +1,84 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> SME Record Edit
+          <button type="button" class="btn btn-sm btn-primary float-right" (click)="back()">
+            <i class="fa fa-chevron-left"></i> Back
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="question">
+            <div *ngFor="let item of questions; let i = index">
+              <p><b>{{item.audit_Item_ID}}.{{item.quesionLL}}</b></p>
+              <label class="container">N/A
+                <input type="radio" name="{{i}}" id="{{i}}" (click)="checkChange(item, 3)" />
+                <span class="checkmark"></span>
+              </label>
+              <label class="container" *ngIf="item.typeDrating0!=-999">
+                0
+                <input type="radio" name="{{i}}" (click)="checkChange(item, 0)" (change)="openWebcame(item,template)" />
+                <span class="checkmark"></span>
+              </label>
+              <label class="container" *ngIf="item.typeDrating1!=-999">1
+                <input type="radio" name="{{i}}" (click)="checkChange(item, 1)" (change)="openWebcame(item,template)" />
+                <span class="checkmark"></span>
+              </label>
+              <label class="container" *ngIf="item.typeDrating2!=-999">2
+                <input type="radio" name="{{i}}" (click)="checkChange(item, 2)" />
+                <span class="checkmark"></span>
+              </label>
+              <div *ngIf="item.rating_0 == 1 || item.rating_1 == 1" class="row" >
+                <div class="col-md-12">
+                    <div class="rating-remark">
+                      <div class="col-12">
+                        <label>Remark :</label>
+                      </div>
+                      <div class="col-12">
+                        <textarea class="remake ml-5 form-control" [(ngModel)]="item.remark"> </textarea>
+                      </div>
+                    </div>
+                    <div class="rating-picture mt-2">
+                        <div class="col-12">
+                          <label [hidden]="!item.urlPicture">Picture:</label>
+                        </div>
+                        <div class="col-12 ml-5">
+                          <img [src]="item.urlPicture"  width="10%" [hidden]="!item.urlPicture" />
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <div class="modal">
+                <ng-template #template>
+                  <div class="modal-header">
+                    <h4 class="modal-title pull-left">Take Before Photo</h4>
+                    <button type="button" class="close pull-right" aria-label="Confirm" (click)="modalRef.hide()">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <webcam [width]="470" [height]="350" [trigger]="triggerObservable" (imageCapture)="handleImage(item,$event)"
+                      *ngIf="showWebcam" [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
+                      [videoOptions]="videoOptions" [imageQuality]="1" (cameraSwitched)="cameraWasSwitched($event)"
+                      (initError)="handleInitError($event)" [captureImageData]="true"></webcam>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="triggerSnapshot();">Take a photo</button>
+                    <button type="button" class="btn btn-success" (click)="toggleWebcam()">Toggle Camera</button>
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div class="ml-1 mt-2" *ngIf="questions.length !=0">
+            <button type="button" class="btn btn-add-new btn-success" (click)="save()">
+              <i class="fa fa-check"></i> Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

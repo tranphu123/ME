@@ -1,0 +1,79 @@
+<div class="animated fadeIn">
+  <!--/.row-->
+  <div class="row">
+    <!--/.col-->
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i>  List Dept Members
+          <input type="text" name="search" [(ngModel)]="text" (keyup)="search()" id="search"
+            class="form-control brand-search" placeholder="Search">
+          <button type="button" class="btn btn-sm btn-primary float-right" (click)="changePageAdd()"><i
+              class="fa fa-plus"></i> Add new</button>
+        </div>
+        <div class="card-body">
+          <ngx-spinner bdOpacity=0.2 bdColor="rgba(51,51,51,0.8)" size="medium" color="#20A8D8" type="pacman">
+          </ngx-spinner>
+          <div class="scoll-bottom">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>PIC Type ID</th>
+                  <th>Employee ID</th>
+                  <th>Deputy ID</th>
+                  <th>Chinese Name</th>
+                  <th>English Name</th>
+                  <th>Local Name</th>
+                  <th>Email</th>
+                  <th>Department</th>
+                  <th>Building</th>
+                  <th>Language</th>
+                  <th>Status</th>
+                  <th>Updated By</th>
+                  <th>Updated Time</th>
+                  <th>Edit</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of auditPics;let i = index">
+                  <th>{{ (pagination.currentPage - 1) * pagination.itemsPerPage + i + 1 }}</th>
+                  <th>{{item.piC_Type_ID}}</th>
+                  <th>{{item.resp_ID}}</th>
+                  <th>{{item.agent}}</th>
+                  <th>{{item.resp_ZW}}</th>
+                  <th>{{item.resp_EN}}</th>
+                  <th>{{item.resp_LL}}</th>
+                  <th>{{item.email}}</th>
+                  <th *ngIf="item.pdc == '' || item.pdc == null; else elsePDC">NA</th>
+                  <ng-template #elsePDC>
+                    <th>{{ item.pdc }}</th>
+                  </ng-template>
+                  <th>{{item.building}}</th>
+                  <th>{{item.language=="LL"?"Local":item.language=="ZW"?"Chinese":"English"}} </th>
+                  <th *ngIf="item.status == '1';else statusElse">Valid</th>
+                  <ng-template #statusElse>
+                    <th>Invalid</th>
+                  </ng-template>
+                  <th>{{item.updated_By}}</th>
+                  <th>{{item.updated_Time | date: "MM/dd/yyyy, HH:mm:ss" }}</th>
+                  <td>
+                    <button type="button" (click)="changePageUpdate(item)" class="btn btn-primary btn-sm mr-2"><i
+                        class="fa fa-edit fa-lg"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="d-flex" *ngIf="pagination.totalPages > 1">
+            <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+              [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+              nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]=5>
+            </pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>
+</div>

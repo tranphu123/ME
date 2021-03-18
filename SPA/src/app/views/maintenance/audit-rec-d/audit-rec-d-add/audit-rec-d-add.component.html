@@ -1,0 +1,198 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong *ngIf="flag=='0'; else elseBlock">Add new</strong>
+              <ng-template #elseBlock><strong>Update</strong></ng-template>
+              WT Tracking List
+          <button type="button" (click)="back()" class="btn btn-sm btn-primary float-right"><i
+              class="fa fa-chevron-left"></i>
+            Back</button>
+        </div>
+        <form class="form-horizontal" #addAuditRecDForm="ngForm" (ngSubmit)="addAuditRecDForm.valid && btnSaveAndNext()">
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-1 col-form-label" for="Record_ID">Record ID</label>
+              <div class="col-md-2">
+                <ng-select2 [data]="recordIDs" width="100%" [(ngModel)]="auditRecD.record_ID" name="record_ID"
+                  [disabled]="flag=='1'" required>
+                </ng-select2>
+              </div>
+              <label class="col-md-1 col-form-label" for="Model_No">Item No</label>
+              <div class="col-md-2">
+                <input type="number" [(ngModel)]="auditRecD.item_no" class="form-control" name="item_no"
+                  placeholder="Item No" [disabled]="true">
+              </div>
+              <label class="col-md-1 col-form-label" for="ersc">ECRS</label>
+              <div class="col-md-2">
+                <select name="" [(ngModel)]="auditRecD.ercs" name="ersc" class="form-control">
+                  <option value="E">E</option>
+                  <option value="C">C</option>
+                  <option value="R">R</option>
+                  <option value="S">S</option>
+                </select>
+              </div>
+              <label class="col-md-1 col-form-label" for="Status">Status</label>
+              <div class="col-md-2">
+                <select name="status" [(ngModel)]="auditRecD.status" name="status" class="form-control">
+                  <option value="Ongoing">OnGoing</option>
+                  <option value="Not Feasible">Not Feasible </option>
+                  <option value="Implemented">Implemented</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-1 col-form-label" for="upload_picture">PIC</label>
+              <div class="col-md-2">
+                <ng-select2 [data]="pdPics" width="100%" [(ngModel)]="auditRecD.pD_PIC"
+                  (ngModelChange)="getAllPdDepBuil($event)" name="PD_PIC" required>
+                </ng-select2>
+              </div>
+
+              <label class="col-md-1 col-form-label" >PD Department</label>
+              <div class="col-md-2">
+                <input class="form-control" type="text" name="pD_Department" [value]="pdDepartment" 
+                  placeholder="PD_Department" disabled />
+              </div>
+              <label class="col-md-1 col-form-label">PD Building</label>
+              <div class="col-md-2">
+                <input class="form-control" type="text" name="pD_Building" [value]="pdBuilding"
+                  placeholder="PD_Building" disabled />
+              </div>
+              <label class="col-md-1 col-form-label" for="upload_picture">ME PIC</label>
+              <div class="col-md-2">
+                <ng-select2 [data]="mePics" width="100%" [(ngModel)]="auditRecD.mE_PIC" name="ME_PIC">
+                </ng-select2>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-1 col-form-label" for="upload_picture">Before Picture</label>
+              <div class="col-md-3">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="btn btn-primary btn-sm upload">
+                      Upload
+                      <input type="file" class="uploadFile img" value="Upload Photo" style="width: 0px; height: 0px; overflow: hidden;"
+                        (change)="onSelectFile($event,1)" #fileImageB4 />
+                    </label>
+                    <br>
+                    <span> Or </span> <br>
+                    <button type="button" class="btn btn-sm btn-primary" (click)="openWebcame(template,1)"><i class="fa fa-file-image-o"></i> Take a
+                      Photo</button>
+                  </div>
+                  <div class="col-md-6">
+                    <img *ngIf="chkImage(auditRecD.before_Picture)" [src]="url_before" width="90%"  />
+                    <!-- <video *ngIf="!chkImage(auditRecD.before_Picture)" width="100%" [src]="url_before" controls width="100"></video> -->
+                  </div>
+                </div>
+              </div>
+
+              <label class="col-md-1 col-form-label" for="upload_picture">After Picture</label>
+              <div class="col-md-3">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="btn btn-primary upload">
+                      Upload
+                      <input type="file" class="uploadFile img" value="Upload Photo"
+                        style="width: 0px; height: 0px; overflow: hidden;" (change)="onSelectFile($event,0)" #fileImageAfter />
+                    </label>
+                    <br>
+                    <span> Or </span> <br>
+                    <button type="button" class="btn btn-sm btn-primary" (click)="openWebcame(template,2)"><i class="fa fa-file-image-o"></i> Take a
+                      Photo</button>
+                      </div>
+                  <div class="col-md-6">
+                    <img *ngIf="chkImage(auditRecD.after_Picture)" [src]="url_after" width="90%"  />
+                    <!-- <video *ngIf="!chkImage(auditRecD.after_Picture)" width="100%" [src]=" url_after" controls
+                        width="100"></video> -->
+                  </div>
+              </div>
+              </div>
+
+            </div>
+            <div class="form-group row">
+              <label class="col-md-1 col-form-label" for="audit_Type">Audit Type</label>
+              <div class="col-md-2">
+                <ng-select2 [data]="auditType" width="100%" [(ngModel)]="auditRecD.audit_Type_ID"
+                  (ngModelChange)="optionAuditType($event)" name="audit_Type">
+                </ng-select2>
+              </div>
+              <label class="col-md-1 col-form-label" for="audit_Item">Audit Item ID</label>
+              <div class="col-md-2">
+                <ng-select2 [data]="auditItems" width="100%" [(ngModel)]="auditRecD.audit_Item" [value]="auditRecD.audit_Item"
+                  name="audit_Item">
+                </ng-select2>
+              </div>
+              <label class="col-md-1 col-form-label" for="audit_Item">Finished Date</label>
+              <div class="col-md-2">
+                <div class="input-group">
+                  <input class="form-control" name="Record_Time" placeholder="Record Time"
+                    (bsValueChange)="onDateSelect()" [(ngModel)]="auditRecD.finished_Date" type="text" bsDatepicker
+                    [bsConfig]="{ isAnimated: true, dateInputFormat: 'YYYY/MM/DD'}">
+                  <span class="input-group-text">
+                    <span class="fa fa-calendar"></span>
+                  </span>
+                </div>
+              </div>
+              <label class="col-md-1 col-form-label" for="Remark">Remark</label>
+              <div class="col-md-2">
+                <input type="text" [(ngModel)]="auditRecD.remark" class="form-control" name="remark"
+                  placeholder="Enter Remark">
+              </div>
+            </div>
+            <div class="form-group row">
+            </div>
+            <div class="form-group row">
+              <div class="col-md-4">
+                <textarea class="form-control" name="Local" [(ngModel)]="auditRecD.issue_LL" rows="5" required
+                  placeholder="Description (Local)"></textarea>
+              </div>
+              <div class="col-md-4">
+                <textarea class="form-control" name="Chinese" [(ngModel)]="auditRecD.issue_ZW" rows="5"
+                  placeholder=" Description (Chinese)"></textarea>
+              </div>
+              <div class="col-md-4">
+                <textarea class="form-control" name="English" [(ngModel)]="auditRecD.issue_EN" rows="5"
+                  placeholder="Description (English)"></textarea> 
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button type="button" class="btn btn-sm btn-danger" (click)="cancel()"><i class="fa fa-ban"></i>
+              Cancel</button>
+            <button type="submit" *ngIf="flag === '0'" class="btn btn-sm btn-primary" 
+           [disabled]="!addAuditRecDForm.valid"><i class="fa fa-check"></i> Save & NewDetail</button>
+            <button type="button" class="btn btn-sm btn-success" (click)="btnSave()"
+              [disabled]="!addAuditRecDForm.valid"><i class="fa fa-check"></i> Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+      <div class="modal">
+        <ng-template #template>
+          <div class="modal-header">
+            <h4 class="modal-title pull-left">Take Before Photo</h4>
+            <button type="button" class="close pull-right" aria-label="Confirm" (click)="modalRef.hide()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <!-- Modal -->
+          <div class="modal-body">
+            <webcam [width]="470" [height]="350" [trigger]="triggerObservable" (imageCapture)="handleImage($event)"
+              *ngIf="showWebcam" [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
+              [videoOptions]="videoOptions" [imageQuality]="1" (cameraSwitched)="cameraWasSwitched($event)"
+              (initError)="handleInitError($event)" [captureImageData]="true"></webcam>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Close</button>
+            <button type="button" class="btn btn-primary" (click)="triggerSnapshot();">Take a photo</button>
+            <button type="button" class="btn btn-success" (click)="toggleWebcam()">Toggle Camera</button>
+          </div>
+        </ng-template>
+      </div>
+        
+
+  </div>
+

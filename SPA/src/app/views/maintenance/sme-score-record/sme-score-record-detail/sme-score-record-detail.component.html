@@ -1,0 +1,130 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> SME Record Detail
+          <button type="button" class="btn btn-sm btn-primary float-right" (click)="back()">
+            <i class="fa fa-chevron-left"></i> Back
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="form-group row">
+            <label class="col-md-1 col-form-label" for="hf-email">Date: </label>
+            <div class="col-md-2">
+              <input type="text" class="form-control" [value]="auditRateM.record_Date | date: 'yyyy/MM/dd' " disabled />
+            </div>
+            <label class="col-md-1 col-form-label" for="hf-password">Department:</label>
+            <div class="col-md-2">
+              <input type="text" class="form-control" [(ngModel)]="auditRateM.pdC_Name" disabled />
+            </div>
+            <label class="col-md-1 col-form-label" for="hf-email">Building:
+            </label>
+            <div class="col-md-2">
+              <input type="text" class="form-control" [value]="building" disabled />
+            </div>
+            <label class="col-md-1 col-form-label" for="hf-password">Line:</label>
+            <div class="col-md-2">
+              <input type="text" class="form-control" [(ngModel)]="auditRateM.line_ID_2_Name" disabled />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-1 col-form-label" for="hf-email">Audit Type:
+            </label>
+            <div class="col-md-2">
+              <input type="text" class="form-control" [(ngModel)]="auditRateM.audit_Type1" disabled />
+            </div>
+            <label class="col-md-1 col-form-label" for="hf-password"> Audit Item:</label>
+            <div class="col-md-2">
+              <input type="text" class="form-control" [(ngModel)]="auditRateM.audit_Type2" disabled />
+            </div>
+            <label class="col-md-1 col-form-label" for="hf-email">Update User:
+            </label>
+            <div class="col-md-2">
+              <input type="text" class="form-control" [(ngModel)]="auditRateM.updated_By" disabled />
+            </div>
+            <label class="col-md-1 col-form-label" for="hf-password">Update Time:</label>
+            <div class="col-md-2">
+              <input type="text" class="form-control" [value]="auditRateM.updated_Time | date: 'yyyy/MM/dd HH:mm:ss'"
+                disabled />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-1 col-form-label" for="hf-email">
+              Auditor:
+            </label>
+            <div class="col-md-2">
+              <input type="text" class="form-control" disabled [value]="mePic" />
+            </div>
+            <label class="col-md-1 col-form-label" for="hf-password">
+              Prod. PIC:
+            </label>
+            <div class="col-md-2">
+              <input type="text" class="form-control" disabled [value]="pdResp" />
+            </div>
+            <div class="col-md-4">
+              <button type="button" class="btn btn-success"
+                (click)="exportExcelDetail()">
+                <i class="fa fa-file-excel-o"></i> Excel
+              </button>
+              <button type="button" class="btn btn-primary ml-2"
+                (click)="print()">
+                <i class="fa fa-print"></i> Print
+              </button>
+              <button type="button" class="btn btn-secondary ml-2"
+                (click)="edit()">
+                <i class="fa fa-pencil"></i> Edit
+              </button>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Audit Item ID</th>
+                  <th>Audit Item LL</th>
+                  <th>Audit Item CN</th>
+                  <th>Audit Item EN</th>
+                  <th>Rating</th>
+                  <th>Remark</th>
+                  <th>Picture</th>
+                </tr>  
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of listAuditRateD" [class.bacground-color-yellow]="item.rating0 == 0 && item.rating1 == 0 && item.rating2 == 0 && item.ratingNA == 0">
+                  <td>{{ item.auditItemId }}</td>
+                  <td>{{ item.auditItemLL }}</td>
+                  <td>{{ item.auditItemZW }}</td>
+                  <td>{{ item.auditItemEN }}</td>
+                  <td>{{item.rating2 == 1 ? "2" : item.rating1 == 1 ? "1" : item.rating0 == 1 ? "0" : item.ratingNA == 1 ? "NA" : ""}}
+                  </td>
+                  <td>{{ item.remark }}</td>
+
+                  <td *ngIf="item.rating0 == 1 || item.rating1 == 1">
+                    <img *ngIf="chkImage(item.uplloadPicture)" [src]="
+                        item.uplloadPicture === null
+                          ? url + 'no-image.jpg'
+                          : url + item.uplloadPicture
+                      " width="100%" width="60" />
+                    <video *ngIf="!chkImage(item.uplloadPicture)" width="100%" [src]="
+                        item.uplloadPicture === null
+                          ? url + 'no-image.jpg'
+                          : url + item.uplloadPicture
+                      " controls width="100"></video>
+                    <!-- <label class="btn btn-primary upload">
+                      Upload
+                      <input type="file" class="uploadFile img" value="Upload Photo"
+                        style="width: 0px; height: 0px; overflow: hidden;"
+                        (change)="onSelectFile($event, item.auditItemId)" #fileImageB4 />
+                    </label> -->
+                  </td>
+                  <td *ngIf="item.rating0 != 1 && item.rating1 != 1"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

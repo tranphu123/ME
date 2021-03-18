@@ -1,0 +1,38 @@
+thead {
+  background-color: #20a8d8;
+  color: #fff;
+}
+
+
+.scoll-bottom {
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+th {
+  font-weight: normal;
+}
+.font-table {
+  font-size: 11px;
+}
+.dropdown-pointer {
+  cursor: pointer;
+}
+.input-file {
+  margin-bottom: 4px;
+}
+.button-1 {
+  width: 115px;
+  float: right;
+}
+.hover01 figure img {
+-webkit-transform: scale(1);
+transform: scale(1);
+-webkit-transition: .3s ease-in-out;
+transition: .3s ease-in-out;
+cursor: pointer;
+}
+.hover01 figure:hover img {
+-webkit-transform: scale(1.3);
+transform: scale(1.3);
+cursor: pointer;
+}

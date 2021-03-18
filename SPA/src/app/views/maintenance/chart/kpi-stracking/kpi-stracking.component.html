@@ -1,0 +1,89 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-3">
+              <label class="badge badge-warning font-lable">From date</label>
+              <div class="input-group">
+                  <input type="text" placeholder="Start Date" id="fromDate" class="form-control"
+                      bsDatepicker [(ngModel)]="timeFrom" name="time_start" [bsConfig]="{
+                        isAnimated: true,
+                        dateInputFormat: 'YYYY/MM/DD'
+                      }">
+                  <span class="input-group-append">
+                      <button class="btn btn-primary" type="button" disabled><i
+                              class="fa fa-calendar"></i></button>
+                  </span>
+              </div>
+          </div>
+          <div class="col-md-3">
+            <label class="badge badge-warning font-lable">To date</label>
+            <div class="input-group">
+                <input type="text" placeholder="End Date" id="fromDate" class="form-control"
+                    bsDatepicker [(ngModel)]="timeEnd" name="time_end" [bsConfig]="{
+                      isAnimated: true,
+                      dateInputFormat: 'YYYY/MM/DD'
+                    }">
+                <span class="input-group-append">
+                    <button class="btn btn-primary" type="button" disabled><i
+                            class="fa fa-calendar"></i></button>
+                </span>
+            </div>
+        </div>
+            <div class="col-md-2 mt-1">
+              <label class="badge badge-warning font-lable">Line</label>
+              <ng-select2 [data]="lines" [(ngModel)]="line" [value]="line" width="100%" name="line" placeholder="choose line">
+              </ng-select2>
+            </div>
+            <div class="col-md-2 mt-1">
+              <label class="badge badge-warning font-lable">Model No</label>
+              <ng-select2 [data]="styleNos" [(ngModel)]="styleNo" [value]="styleNo" width="100%" name="styleNo" placeholder="choose Model no">
+              </ng-select2>
+            </div>
+            <div class="col-md-2 pt-4 ">
+              <button type="button" class="btn btn-primary" (click)=search()>
+                <i class="fa fa-search"></i> Search
+            </button>
+            </div>
+          </div>
+          <div class="row mt-5">
+            <div class="col">
+              <canvas width="200" height="50" baseChart [datasets]="chartData" [labels]="chartLabels"
+                [chartType]="chartType" [options]="chartOptions"></canvas>
+            </div>
+          </div>
+          <div class="row mt-5">
+            <div class="col table-responsive">
+              <table class="table table-bordered">
+                <tbody>
+                  <tr>
+                    <td>#</td>
+                    <td *ngFor="let item of data"><b>{{ item.yield_Date | date: 'yyyy/MM/dd' }}</b></td>
+                  </tr>
+                  <tr>
+                    <td><b>EOLR Target</b></td>
+                    <td *ngFor="let item of data">{{ item.eolR_Target }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>Real EOLR</b></td>
+                    <td *ngFor="let item of data">{{ item.eolr }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>PPH Target</b></td>
+                    <td *ngFor="let item of data">{{ item.ppH_Target | number: '1.2-2' }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>Real PPH</b></td>
+                    <td *ngFor="let item of data">{{ item.pph | number: '1.2-2'  }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

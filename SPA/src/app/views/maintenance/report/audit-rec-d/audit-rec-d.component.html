@@ -1,0 +1,214 @@
+<div class="animated fadeIn">
+  <!--/.row-->
+  <div class="row">
+    <!--/.col-->
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <!-- <div class="col-3">
+              <input type="file" class="form-control input-file" [(ngModel)]="file_excel" #fileInput
+                name="upload-excel">
+              <button type="button" class="btn btn-block btn-success"><i
+                  class="fa fa-upload"></i> Upload
+              </button>
+            </div> -->
+            <div class="col-3">
+              <label class="badge badge-warning">From Time</label>
+              <div class="input-group">
+                <input class="form-control" placeholder="Start" [(ngModel)]="time_start" type="text" bsDatepicker
+                  [bsConfig]="{ isAnimated: true, dateInputFormat: 'YYYY/MM/DD'}">
+                <span class="input-group-text">
+                  <span class="fa fa-calendar"></span>
+                </span>
+              </div>
+            </div>
+            <div class="col-3">
+              <label class="badge badge-warning">To Time</label>
+              <div class="input-group">
+                <input class="form-control" placeholder="End" [(ngModel)]="time_end" type="text" bsDatepicker
+                  [bsConfig]="{ isAnimated: true, dateInputFormat: 'YYYY/MM/DD'}">
+                <span class="input-group-text">
+                  <span class="fa fa-calendar"></span>
+                </span>
+              </div>
+            </div>
+            <div class="col-3">
+              <label class="badge badge-warning">Department</label>
+              <ng-select2 [data]="pdcList" width="100%" [(ngModel)]="pdc" name="pdc" (ngModelChange)="pdcChange()">
+              </ng-select2>
+            </div>
+            <div class="col-3">
+              <label class="badge badge-warning">Building</label>
+              <ng-select2 [data]="buildings" width="100%" [(ngModel)]="building" name="building"
+                (ngModelChange)="buingdingChange()">
+              </ng-select2>
+            </div>
+
+          </div>
+          <div class="row mt-2">
+            <div class="col-3">
+              <label class="badge badge-warning">Line</label>
+              <ng-select2 [data]="lines" width="100%" [(ngModel)]="line" name="line">
+              </ng-select2>
+            </div>
+            <div class="col-3">
+              <label class="badge badge-warning">Status</label>
+              <ng-select2 [data]="statusList" width="100%" [(ngModel)]="status" name="status">
+              </ng-select2>
+            </div>
+            <div class="col-3">
+              <label class="badge badge-warning">Audit Type </label>
+              <ng-select2 [data]="auditType1List" width="100%" [(ngModel)]="auditType1" name="auditType1"
+                (ngModelChange)="optionAuditType1($event)">
+              </ng-select2>
+            </div>
+            <div class="col-3">
+              <label class="badge badge-warning">Audit Item</label>
+              <ng-select2 [data]="auditType2List" width="100%" [(ngModel)]="auditType2" [value]="auditType2"
+                name="auditType2">
+              </ng-select2>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-3">
+              <label class="badge badge-warning">Model No</label>
+              <ng-select2 [data]="modelNos" width="100%" [(ngModel)]="model_No" name="model_No">
+              </ng-select2>
+            </div>
+            <div class="col-3">
+              <label class="badge badge-warning">Model Name</label>
+              <input class="form-control" type="text" name="model_name" [(ngModel)]="model_Name"
+                placeholder="Model Name">
+            </div>
+            <div class="col-3 mt-1">
+              <div class="row mt-4">
+                <div class="col-6">
+                  <button type="button" (click)="search()" class="btn btn-block btn-secondary"><i
+                      class="fa fa-search"></i> Search
+                  </button>
+                </div>
+                <div class="col-6 ">
+                  <div class="dropdown ml-1" dropdown>
+                    <button class="btn  btn-block btn-success" data-toggle="dropdown1" href="#" role="button"
+                      aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
+                      <i class="fa fa-file-excel-o"></i> Excel
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+                      <a class="dropdown-item dropdown-pointer" (click)="exportExcel()">Export Summary</a>
+                      <!-- <a class="dropdown-item dropdown-pointer" (click)="exportExcelDetail()">Export Detail</a> -->
+                      <a class="dropdown-item dropdown-pointer" (click)="exportExcelWT()">Export WT Tracking list</a>
+                      <div class="divider"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="card-body">
+          <div class="card">
+            <div class="scoll-bottom">
+              <table class="table table-bordered ">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Record Date</th>
+                    <th>Line Name</th>
+                    <th>Model Name</th>
+                    <th>Model No</th>
+                    <th>Item no</th>
+                    <th>ERCS</th>
+                    <th>Audit Type</th>
+                    <th>Audit Item ID</th>
+                    <th>Issue LL</th>
+                    <th>Issue CN</th>
+                    <th>Issue EN</th>
+                    <th>Before Picture</th>
+                    <th>After Picture</th>
+                    <th>PIC</th>
+                    <th>PD Department</th>
+                    <th>ME PIC</th>
+                    <th>Finished Date</th>
+                    <th>Status</th>
+                    <th>Remark</th>
+                    <th>Implement User</th>
+                    <th>Implement Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of auditRecs;let i = index">
+                    <th class="font-table ">{{ (pagination.currentPage - 1) * pagination.itemsPerPage + i + 1 }}</th>
+                    <th class="font-table">{{ item.record_Time | date: "MM/dd/yyyy" }}</th>
+                    <th class="font-table">{{ item.line_Name }}</th>
+                    <th class="font-table">{{ item.model_Name }}</th>
+                    <th class="font-table">{{ item.model_No }}</th>
+                    <th class="font-table">{{ item.item_no }}</th>
+                    <th class="font-table">{{ item.ercs }}</th>
+                    <th class="font-table">{{ item.audit_Type }}</th>
+                    <th class="font-table">{{ item.audit_Item }}</th>
+                    <th class="font-table"><div  style="width: 110px;">{{ item.issue_LL }}</div></th>
+                    <th class="font-table"><div  style="width: 110px;">{{ item.issue_ZW }}</div></th>
+                    <th class="font-table"><div  style="width: 110px;">{{ item.issue_EN }}</div></th>
+                    <th class="hover01">
+                      <figure><img *ngIf="chkImage(item.before_Picture)" [src]="
+                      (item.before_Picture === null || item.before_Picture === '')
+                        ? urlImage
+                        : url + item.before_Picture
+                    " width="100%" width="60" (click)="openImage(item.before_Picture)" /></figure>
+                      <video *ngIf="!chkImage(item.before_Picture)" width="100%" [src]="
+                      (item.before_Picture === null || item.before_Picture === '')
+                        ? urlImage
+                        : url + item.before_Picture
+                    " controls width="100"></video>
+                    </th>
+                    <th class="hover01">
+                      <figure><img *ngIf="chkImage(item.after_Picture)" [src]="
+                      (item.after_Picture === null || item.after_Picture === '')
+                        ? urlImage
+                        : url + item.after_Picture
+                    " width="100%" width="60" (click)="openImage(item.after_Picture)" /></figure>
+                      <video *ngIf="!chkImage(item.after_Picture)" width="100%" [src]="
+                      (item.after_Picture === null || item.after_Picture === '')
+                        ? urlImage
+                        : url + item.after_Picture
+                    " controls width="100"></video>
+                    </th>
+                    <th class="font-table">{{ item.pD_PIC_Name }}</th>
+                    <th class="font-table">{{ item.pD_Department }}</th>
+                    <th class="font-table">{{ item.mE_PIC_Name }}</th>
+                    <th class="font-table">{{ item.finished_Date | date: "MM/dd/yyyy, HH:mm:ss" }}</th>
+                    <th class="font-table" style="background: red;color: white;"
+                      *ngIf="item.status.trim() === 'Not Feasible'">
+                      {{ item.status }}</th>
+                    <th class="font-table" style="background: rgb(108, 180, 91);color: white;"
+                      *ngIf="item.status === 'Implemented'">{{ item.status }}</th>
+                    <th class="font-table" style="background:yellow;color: rgb(24, 20, 224);"
+                      *ngIf="item.status === 'Ongoing'">{{ item.status }}</th>
+                    <th class="font-table">{{ item.remark }}</th>
+                    <th class="font-table">{{ item.implement_User }}</th>
+                    <th class="font-table">{{ item.implement_Time | date: "MM/dd/yyyy, HH:mm:ss" }}</th>
+                    <!-- <th class="font-table align-middle arow" style='white-space: nowrap'>
+                      <button type="button" (click)="update(item,0)" class="btn btn-primary btn-sm mr-1  "><i
+                          class="fa fa-edit fa-lg"></i>M</button>
+                      <button type="button" (click)="update(item,1)" class="btn btn-primary btn-sm  "><i
+                          class="fa fa-edit fa-lg"></i>D</button>
+                    </th> -->
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="d-flex" *ngIf="pagination.totalPages > 1">
+            <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+              [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+              nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]=5>
+            </pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>
+</div>
